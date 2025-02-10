@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semester Marks Calculator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script type="module">
+        import '@material/web/all.js';
+    </script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: auto;
+            margin-top: 60px;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            text-align: left;
+        }
+        .input-container label {
+            display: block;
+            margin-top: 24px;
+            margin-bottom: 0px;
+            color: #555;
+        }
+        .input-field {
+            padding: 0px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+        }
+        .input {
+            padding: 0px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+        }
+        .btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 0px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn.green { background-color: #4CAF50; color: white; }
+        .btn.blue { background-color: #2196F3; color: white; }
+        .resultSmall {
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+        .result {
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .header-image {
+            width: 100%;
+            border-radius: 10px 10px 0 0;
+        }
+        .description {
+            color: #202020;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            text-align: start;
+            font-weight: 400;
+        }
+        .description2 {
+            text-align: start;
+            font-size: 14px;
+            color: #242323;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h4>Semester Marks Calculator</h4>
+        <h6 class="description">Enter your marks below to check</h6>
+        <p class="description2">• If you have passed the semester or not.<BR>• Calculate the marks required in the final offline exam to pass.<BR>• A minimum of 33% overall is required to pass the semester.</p>
+        
+        <form class="input-container">
+            <label for="mid1">Module A Mid Quiz (out of 10)</label>
+            <div class="input-field">
+                <input type="number" id="midA" min="0" max="10">
+            </div>
+            <label for="mid2">Module A End Quiz (out of 10)</label>
+            <div class="input-field">
+                <input type="number" id="endA" min="0" max="10">
+            </div>
+            <label for="mid2">Module B Mid Quiz (out of 10)</label>
+            <div class="input-field">
+                <input type="number" id="midB" min="0" max="10">
+            </div>
+            <label for="mid2">Module B End Quiz (out of 10)</label>
+            <div class="input-field">
+                <input type="number" id="endB" min="0" max="10">
+            </div>
+            <label for="mid2">Final offline Exam (out of 100)</label>
+            <div class="input-field">
+                <input type="number" id="finalExam" min="0" max="100">
+            </div>
+        </form>
+        
+        <button class="btn green" onclick="calculateResult()">Check Result</button>
+        <button class="btn blue" onclick="calculateRequiredMarks()">Calculate Required Marks in offline exam</button>
+        <div class="resultSmall" id="result"></div>
+        <div class="result" id="output"></div>
+    </div>
+    
+    <script>
+        function getFieldValue(id, max) {
+            return Math.max(Math.min(parseFloat(document.querySelector(`#${id}`).value), max), 0) || 0;
+        }
+        
+        function calculateResult() {
+            let midA = getFieldValue('midA', 10);
+            let endA = getFieldValue('endA', 10);
+            let midB = getFieldValue('midB', 10);
+            let endB = getFieldValue('endB', 10);
+            let finalExam = getFieldValue('finalExam', 100);
+
+            let midAWeighted = (midA / 10) * 10;
+            let endAWeighted = (endA / 10) * 15;
+            let midBWeighted = (midB / 10) * 10;
+            let endBWeighted = (endB / 10) * 15;
+            let finalExamWeighted = (finalExam / 100) * 50;
+            let totalWeighted = midAWeighted + endAWeighted + midBWeighted + endBWeighted + finalExamWeighted;
+
+            document.getElementById('result').innerHTML =  
+                `<span style='color: black;'>Module A Mid Quiz (10%) : ${midAWeighted.toFixed(1)}%<BR>Module A End Quiz (15%) : ${endAWeighted.toFixed(1)}%<BR>Module B Mid Quiz (10%) : ${midBWeighted.toFixed(1)}%<BR>Module B End Quiz (15%) : ${endBWeighted.toFixed(1)}%<BR>Offline Exam (50%) : ${finalExamWeighted.toFixed(1)}%</span>`;
+
+            document.getElementById('output').innerHTML = totalWeighted >= 33 
+                ? `<span style='color: green;'>Congratulations! You have passed the semester with a score of ${totalWeighted.toFixed(1)}% 🎉</span>`
+                : `<span style='color: red;'>Unfortunately, you have failed the semester with a score of <span style='color: black;'>${totalWeighted.toFixed(1)}%</span>. Better luck next time! 😞</span>`;
+        }
+
+        function calculateRequiredMarks() {
+            let midA = getFieldValue('midA', 10);
+            let endA = getFieldValue('endA', 10);
+            let midB = getFieldValue('midB', 10);
+            let endB = getFieldValue('endB', 10);
+
+            let midAWeighted = (midA / 10) * 10;
+            let endAWeighted = (endA / 10) * 15;
+            let midBWeighted = (midB / 10) * 10;
+            let endBWeighted = (endB / 10) * 15;
+            let finalExamWeighted = (finalExam / 100) * 50;
+            
+            let currentWeighted = midAWeighted + endAWeighted + midBWeighted + endBWeighted;
+            let requiredInFinal = ((33 - currentWeighted) / 50) * 100;
+
+            document.getElementById('result').innerHTML =  
+                `<span style='color: black;'>Module A Mid Quiz (10%) : ${midAWeighted.toFixed(1)}%<BR>Module A End Quiz (15%) : ${endAWeighted.toFixed(1)}%<BR>Module B Mid Quiz (10%) : ${midBWeighted.toFixed(1)}%<BR>Module B End Quiz (15%) : ${endBWeighted.toFixed(1)}%</span>`;
+            
+            if (requiredInFinal <= 0) {
+                document.getElementById('output').innerHTML = `<span style='color: green;'>You have already secured enough marks (${currentWeighted.toFixed(1)}%) to pass! 🎉</span>`;
+            } else if (requiredInFinal > 100) {
+                document.getElementById('output').innerHTML = "<span style='color: red;'>Even scoring 100 in final, passing is not possible. You need more marks in quizzes. 😞</span>";
+            } else {
+                document.getElementById('output').innerHTML = `To pass the semester, you need at least <span style='color: red;'>${requiredInFinal.toFixed(1)}%</span> marks in the final offline exam.`;
+            }
+        }
+    </script>
+</body>
+</html>
