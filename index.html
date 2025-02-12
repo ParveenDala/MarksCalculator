@@ -92,7 +92,7 @@
     <div class="container">
         <h4>Semester Marks Calculator</h4>
         <h6 class="description">Enter your marks below to check</h6>
-        <p class="description2">• If you have passed the semester or not.<BR>• Calculate the marks required in the final offline exam to pass.<BR>• A minimum of 33% overall is required to pass the semester.</p>
+        <p class="description2">• If you have passed the semester or not.<BR>• Calculate the marks required in the final offline exam to pass.<BR>• A minimum of 30% overall is required to pass the semester.</p>
         
         <form class="input-container">
             <label for="mid1">Module A Mid Quiz (out of 10)</label>
@@ -145,7 +145,7 @@
             document.getElementById('result').innerHTML =  
                 `<span style='color: black;'>Module A Mid Quiz (10%) : ${midAWeighted.toFixed(1)}%<BR>Module A End Quiz (15%) : ${endAWeighted.toFixed(1)}%<BR>Module B Mid Quiz (10%) : ${midBWeighted.toFixed(1)}%<BR>Module B End Quiz (15%) : ${endBWeighted.toFixed(1)}%<BR>Offline Exam (50%) : ${finalExamWeighted.toFixed(1)}%</span>`;
 
-            document.getElementById('output').innerHTML = totalWeighted >= 33 
+            document.getElementById('output').innerHTML = totalWeighted >= 30 
                 ? `<span style='color: green;'>Congratulations! You have passed the semester with a score of ${totalWeighted.toFixed(1)}% 🎉</span>`
                 : `<span style='color: red;'>Unfortunately, you have failed the semester with a score of <span style='color: black;'>${totalWeighted.toFixed(1)}%</span>. Better luck next time! 😞</span>`;
         }
@@ -163,7 +163,7 @@
             let finalExamWeighted = (finalExam / 100) * 50;
             
             let currentWeighted = midAWeighted + endAWeighted + midBWeighted + endBWeighted;
-            let requiredInFinal = ((33 - currentWeighted) / 50) * 100;
+            let requiredInFinal = ((30 - currentWeighted) / 50) * 100;
 
             document.getElementById('result').innerHTML =  
                 `<span style='color: black;'>Module A Mid Quiz (10%) : ${midAWeighted.toFixed(1)}%<BR>Module A End Quiz (15%) : ${endAWeighted.toFixed(1)}%<BR>Module B Mid Quiz (10%) : ${midBWeighted.toFixed(1)}%<BR>Module B End Quiz (15%) : ${endBWeighted.toFixed(1)}%</span>`;
