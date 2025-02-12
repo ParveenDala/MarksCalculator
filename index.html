@@ -127,6 +127,9 @@
         function getFieldValue(id, max) {
             return Math.max(Math.min(parseFloat(document.querySelector(`#${id}`).value), max), 0) || 0;
         }
+        function getWeightedMarks(marks, total, weight) {
+            return (marks / total) * weight;
+        }
         
         function calculateResult() {
             let midA = getFieldValue('midA', 10);
@@ -135,11 +138,11 @@
             let endB = getFieldValue('endB', 10);
             let finalExam = getFieldValue('finalExam', 100);
 
-            let midAWeighted = (midA / 10) * 10;
-            let endAWeighted = (endA / 10) * 15;
-            let midBWeighted = (midB / 10) * 10;
-            let endBWeighted = (endB / 10) * 15;
-            let finalExamWeighted = (finalExam / 100) * 50;
+            let midAWeighted = getWeightedMarks(midA, 10, 10);
+            let endAWeighted = getWeightedMarks(endA, 10, 15);
+            let midBWeighted = getWeightedMarks(midB, 10, 10);
+            let endBWeighted = getWeightedMarks(endB, 10, 15);
+            let finalExamWeighted = getWeightedMarks(finalExam, 100, 50);
             let totalWeighted = midAWeighted + endAWeighted + midBWeighted + endBWeighted + finalExamWeighted;
 
             document.getElementById('result').innerHTML =  
@@ -156,11 +159,11 @@
             let midB = getFieldValue('midB', 10);
             let endB = getFieldValue('endB', 10);
 
-            let midAWeighted = (midA / 10) * 10;
-            let endAWeighted = (endA / 10) * 15;
-            let midBWeighted = (midB / 10) * 10;
-            let endBWeighted = (endB / 10) * 15;
-            let finalExamWeighted = (finalExam / 100) * 50;
+            let midAWeighted = getWeightedMarks(midA, 10, 10);
+            let endAWeighted = getWeightedMarks(endA, 10, 15);
+            let midBWeighted = getWeightedMarks(midB, 10, 10);
+            let endBWeighted = getWeightedMarks(endB, 10, 15);
+            let finalExamWeighted = getWeightedMarks(finalExam, 100, 50);
             
             let currentWeighted = midAWeighted + endAWeighted + midBWeighted + endBWeighted;
             let requiredInFinal = ((30 - currentWeighted) / 50) * 100;
